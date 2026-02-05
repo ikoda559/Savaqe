@@ -4,12 +4,12 @@ An intelligent application that helps entrepreneurs transform their business ide
 
 ## Features
 
-- 💬 **AI Chat Assistant** - Interactive conversation with Claude AI to refine and develop your business ideas
-- 🎨 **Integrated Wireframe Editor** - Built-in Excalidraw-based wireframing tool for visualizing your app concepts
-- 🤖 **AI Wireframe Generation** - Automatically generate wireframes from your chat conversations
-- 💾 **Conversation History** - Save and revisit past business idea discussions
-- 📋 **Wireframe History** - Store and manage multiple wireframe designs
-- ⚡ **Real-time Updates** - Instant AI responses and seamless wireframe editing
+- **AI Chat Assistant** - Interactive conversation with Claude AI to refine and develop your business ideas
+- **Integrated Wireframe Editor** - Built-in Excalidraw-based wireframing tool for visualizing your app concepts
+- **AI Wireframe Generation** - Automatically generate wireframes from your chat conversations
+- **Conversation History** - Save and revisit past business idea discussions
+- **Wireframe History** - Store and manage multiple wireframe designs
+- **Real-time Updates** - Instant AI responses and seamless wireframe editing
 
 ## Tech Stack
 
