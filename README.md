@@ -1,6 +1,6 @@
 # Savaqe - AI-Powered Business Idea Generator & Wireframe Tool
 
-An intelligent application that helps entrepreneurs transform their business ideas into actionable app concepts with integrated AI-powered wireframing capabilities.
+An intelligent application that helps developers turn their ideas into actionable app concepts with integrated AI-powered wireframing capabilities.
 
 ## Features
 
