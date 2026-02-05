@@ -92,7 +92,6 @@ CREATE POLICY "Allow all operations on wireframes" ON wireframes
 
 5. Start the backend server:
 ```bash
-cd backend
 npm install
 node server.js
 ```
