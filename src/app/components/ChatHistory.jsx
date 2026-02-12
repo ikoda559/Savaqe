@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 import { supabase } from '../../supabaseClient'
 import WireframeHistory from './WireframeHistory'
 
-export default function ChatHistory({ onSelectConversation, currentConversationId, onSelectWireframe, currentWireframeId }) {
+export default function ChatHistory({ onSelectConversation, currentConversationId, onSelectWireframe, currentWireframeId, isExpanded, onToggleExpand }) {
   const [conversations, setConversations] = useState([])
   const [activeTab, setActiveTab] = useState('chat')
 
@@ -20,7 +20,25 @@ export default function ChatHistory({ onSelectConversation, currentConversationI
   }
 
   return (
-    <div className="w-64 bg-gray-900 border-r border-gray-800 p-4 overflow-y-auto flex flex-col">
+    <div className={`${isExpanded ? 'w-64' : 'w-16'} bg-gray-900 border-r border-gray-800 overflow-y-auto flex flex-col fixed left-0 top-16 bottom-0 z-30 transition-all duration-300`}>
+      {/* Toggle Button */}
+      <button
+        onClick={() => onToggleExpand(!isExpanded)}
+        className="flex items-center justify-center h-10 w-10 rounded-lg hover:bg-gray-800 transition-colors mb-4 text-gray-400 hover:text-gray-200 absolute right-3 top-2"
+      >
+        {isExpanded ? (
+          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+          </svg>
+        ) : (
+          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+          </svg>
+        )}
+      </button>
+
+      {isExpanded && (
+        <div className="flex flex-col flex-1 px-4 py-4">
       {/* Tab buttons */}
       <div className="flex gap-2 mb-4 border-b border-gray-800">
         <button
@@ -74,6 +92,8 @@ export default function ChatHistory({ onSelectConversation, currentConversationI
           onSelectWireframe={onSelectWireframe}
           currentWireframeId={currentWireframeId}
         />
+      )}
+        </div>
       )}
     </div>
   )

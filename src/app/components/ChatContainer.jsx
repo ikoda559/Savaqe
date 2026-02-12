@@ -1,10 +1,13 @@
-import { useState } from 'react'
+import { useState, useRef, useEffect } from 'react'
 import Message from './Message'
 import { generateWireframeFromChat } from '../utils/wireframeGenerator'
 
 export default function ChatContainer({ messages, isLoading, onGenerateWireframe }) {
   const [generating, setGenerating] = useState(false)
   const [generationStatus, setGenerationStatus] = useState('')
+  const scrollContainerRef = useRef(null)
+
+
 
   const handleGenerateWireframe = async () => {
     if (messages.length === 0) {
@@ -32,20 +35,25 @@ export default function ChatContainer({ messages, isLoading, onGenerateWireframe
   }
 
   return (
-    <div className="flex-1 overflow-y-auto px-6 py-8 flex flex-col">
-      <div className="max-w-3xl mx-auto space-y-6 flex-1">
+    <div ref={scrollContainerRef} className="flex-1 overflow-y-auto px-6 py-8 flex flex-col">
+      <div className="max-w-3xl mx-auto space-y-6 flex-1 pb-24">
         {messages.map((msg, index) => (
           <Message key={index} role={msg.role} content={msg.content} />
         ))}
         
         {isLoading && (
           <div className="flex justify-start">
-            <div className="text-gray-100">
-              <div className="text-lg font-light">
-                <span className="inline-block bg-gradient-to-r from-gray-100 via-gray-300 to-gray-100 bg-[length:200%_auto] animate-shimmer bg-clip-text text-transparent">
-                  Loading...
-                </span>
+            <div className="flex items-center gap-3">
+              <div className="p-0.5 rounded-xl bg-gradient-to-br from-gray-400 via-gray-200 to-gray-400 bg-[length:200%_auto] animate-shimmer shadow-lg border border-gray-200 loading-icon-fade">
+                <img
+                  src="/logo.png"
+                  alt="Savaqe logo"
+                  className="h-7 w-7 rounded-lg loading-icon-shine"
+                />
               </div>
+              <span className="text-sm loading-text-shimmer loading-text-reveal loading-icon-fade">
+                Contemplating...
+              </span>
             </div>
           </div>
         )}

@@ -5,7 +5,6 @@ import SuggestionsGrid from './components/SuggestionsGrid'
 import InputSection from './components/InputSection'
 import ChatContainer from './components/ChatContainer'
 import ChatHistory from './components/ChatHistory'
-import Footer from './components/Footer'
 import Wireframe from './components/Wireframe'
 import { useClaudeAPI } from './hooks/useClaudeAPI'
 
@@ -15,6 +14,7 @@ function App() {
   const [showWireframe, setShowWireframe] = useState(false)
   const [currentWireframeId, setCurrentWireframeId] = useState(null)
   const [currentWireframeData, setCurrentWireframeData] = useState(null)
+  const [sidebarExpanded, setSidebarExpanded] = useState(true)
   const { messages, loading, sendMessage, loadConversation, startNewChat } = useClaudeAPI()
   const [currentConversationId, setCurrentConversationId] = useState(null)
 
@@ -69,13 +69,15 @@ function App() {
     <div className="min-h-screen bg-black text-white flex flex-col">
       <Header onNewChat={handleNewChat} onWireframeClick={handleNewWireframe} />
       
-      <div className="flex flex-1 overflow-hidden">
+      <div className="flex flex-1 overflow-hidden pt-16">
         {!showWireframe && (
           <ChatHistory 
             onSelectConversation={handleSelectConversation}
             currentConversationId={currentConversationId}
             onSelectWireframe={handleSelectWireframe}
             currentWireframeId={currentWireframeId}
+            isExpanded={sidebarExpanded}
+            onToggleExpand={setSidebarExpanded}
           />
         )}
         
@@ -107,13 +109,12 @@ function App() {
                 setInput={setInput} 
                 onSend={handleSend}
                 isLoading={loading}
+                sidebarExpanded={sidebarExpanded}
               />
             </>
           )}
         </div>
       </div>
-      
-      {!showWireframe && <Footer />}
     </div>
   )
 }

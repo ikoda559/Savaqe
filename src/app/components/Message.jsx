@@ -2,37 +2,46 @@ import ReactMarkdown from 'react-markdown'
 
 export default function Message({ role, content }) {
   const isUser = role === 'user'
+  const paragraphClass = isUser
+    ? 'mb-4 last:mb-0 leading-7 text-lg'
+    : 'mb-3 last:mb-0 leading-7 text-lg'
+  const listClass = isUser
+    ? 'list-decimal ml-6 my-4 space-y-2 text-lg'
+    : 'list-decimal ml-6 my-3 space-y-2 text-lg'
+  const bulletClass = isUser
+    ? 'list-disc ml-6 my-4 space-y-2 text-lg'
+    : 'list-disc ml-6 my-3 space-y-2 text-lg'
 
   return (
-    <div className={`flex ${isUser ? 'justify-end' : 'justify-start'} mb-6`}>
+    <div className={`flex ${isUser ? 'justify-end' : 'justify-start'} mb-6 ${!isUser ? 'ai-response-fade' : ''}`}>
       <div
-        className={`max-w-3xl ${
+        className={`${
           isUser
-            ? 'bg-blue-600 text-white rounded-2xl px-6 py-4'
-            : 'text-gray-100 px-2 py-1'
+            ? 'bg-[#B2BEB5] text-black rounded-2xl px-5 py-2 w-fit max-w-3xl border border-black/10 shadow-[0_2px_10px_rgba(0,0,0,0.08)]'
+            : 'text-gray-100 px-1 py-2 w-full'
         }`}
       >
         <ReactMarkdown
           components={{
             // Paragraphs
-            p: ({ children }) => <p className="mb-4 last:mb-0 leading-7 text-base">{children}</p>,
+            p: ({ children }) => <p className={paragraphClass}>{children}</p>,
             
             // Bold text
             strong: ({ children }) => <strong className="font-semibold text-white">{children}</strong>,
             
             // Numbered lists
-            ol: ({ children }) => <ol className="list-decimal ml-6 my-4 space-y-2 text-base">{children}</ol>,
+            ol: ({ children }) => <ol className={listClass}>{children}</ol>,
             
             // Bullet lists
-            ul: ({ children }) => <ul className="list-disc ml-6 my-4 space-y-2 text-base">{children}</ul>,
+            ul: ({ children }) => <ul className={bulletClass}>{children}</ul>,
             
             // List items
-            li: ({ children }) => <li className="ml-2 leading-7">{children}</li>,
+            li: ({ children }) => <li className="ml-2 leading-7 text-lg">{children}</li>,
             
             // Headings
             h1: ({ children }) => <h1 className="text-xl font-semibold mb-3 mt-4 first:mt-0">{children}</h1>,
-            h2: ({ children }) => <h2 className="text-lg font-semibold mb-3 mt-4 first:mt-0">{children}</h2>,
-            h3: ({ children }) => <h3 className="text-base font-semibold mb-2 mt-3 first:mt-0">{children}</h3>,
+            h2: ({ children }) => <h2 className="text-xl font-semibold mb-3 mt-4 first:mt-0">{children}</h2>,
+            h3: ({ children }) => <h3 className="text-lg font-semibold mb-2 mt-3 first:mt-0">{children}</h3>,
             
             // Code blocks
             code: ({ node, inline, children }) => 

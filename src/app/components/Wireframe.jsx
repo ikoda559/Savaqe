@@ -6,6 +6,8 @@ import { supabase } from '../../supabaseClient'
 export default function Wireframe({ onClose, initialData }) {
   const [excalidrawAPI, setExcalidrawAPI] = useState(null)
   const [saveStatus, setSaveStatus] = useState('')
+  const [isWideScreen, setIsWideScreen] = useState(false)
+  const [screenWidth, setScreenWidth] = useState(0)
 
   const preparedInitialData = initialData ? {
     elements: initialData.elements || [],
@@ -27,6 +29,15 @@ export default function Wireframe({ onClose, initialData }) {
   }
 
   useEffect(() => {
+    const updateScreenWidth = () => {
+      const width = window.innerWidth
+      setScreenWidth(width)
+      setIsWideScreen(width >= 2200)
+    }
+
+    updateScreenWidth()
+    window.addEventListener('resize', updateScreenWidth)
+
     const handleKeyDown = (event) => {
       if (event.key === 'Escape') {
         onClose()
@@ -38,8 +49,13 @@ export default function Wireframe({ onClose, initialData }) {
     }
 
     window.addEventListener('keydown', handleKeyDown)
-    return () => window.removeEventListener('keydown', handleKeyDown)
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown)
+      window.removeEventListener('resize', updateScreenWidth)
+    }
   }, [onClose, excalidrawAPI])
+
+  const wideShiftPx = Math.round(1750 + Math.max(0, screenWidth - 1920) * 0.85)
 
   const handleSaveWireframe = async () => {
     if (!excalidrawAPI) return
@@ -87,12 +103,12 @@ export default function Wireframe({ onClose, initialData }) {
           initialData={preparedInitialData}
           renderTopRightUI={() => (
   <div style={{ 
-    position: 'absolute',
-    left: '50%',
-    top: '1px',
-    transform: 'translateX(-810px)', // Moved significantly left - adjust this value as needed
     display: 'flex',
     alignItems: 'center',
+    gap: '2px',
+    transform: isWideScreen
+      ? `translateX(-${wideShiftPx}px)`
+      : 'translateX(clamp(-1530px, -90vw, -1300px))',
   }}>
     <button
       onClick={handleSaveWireframe}

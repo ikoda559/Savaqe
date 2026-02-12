@@ -56,7 +56,10 @@ export function useClaudeAPI() {
                     - Be reinforcing but not overly positive
                     - Be specific with your recommendations
                     - Do not use emojis in your responses`,
-                    messages: [...messages, { role: 'user', content: userMessage }],
+                    messages: [
+                        ...messages.map(msg => ({ role: msg.role, content: msg.content })),
+                        { role: 'user', content: userMessage }
+                    ],
                 }),
             });
 
@@ -64,7 +67,25 @@ export function useClaudeAPI() {
 
             // Extract AI response
             const data = await response.json()
-            const assistantMessage = data.content[0].text
+            console.log('Claude API response:', data)
+
+            // Check for API error response
+            if (data.type === 'error') {
+                const errorMsg = data.error?.message || JSON.stringify(data.error)
+                throw new Error(`Claude API Error: ${errorMsg}`)
+            }
+
+            const assistantMessage =
+                data?.content?.[0]?.text ??
+                data?.message?.content?.[0]?.text ??
+                data?.message?.content ??
+                data?.content ??
+                null
+
+            if (!assistantMessage) {
+                console.error('Could not extract message from response:', data)
+                throw new Error('Claude response missing content')
+            }
 
             // Add AI response to UI
             setMessages(prev => [...prev, { role: 'assistant', content: assistantMessage }])

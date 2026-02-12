@@ -1,4 +1,4 @@
-export default function InputSection({ input, setInput, onSend, isLoading }) {
+export default function InputSection({ input, setInput, onSend, isLoading, sidebarExpanded }) {
   const handleSubmit = (e) => {
     e.preventDefault()
     if (input.trim()) {
@@ -7,8 +7,8 @@ export default function InputSection({ input, setInput, onSend, isLoading }) {
   }
 
   return (
-    <section className="bg-black border-t border-gray-800 py-10 px-6 sticky bottom-0">
-      <div className="max-w-3xl mx-auto mb-4">
+    <section className="bg-gradient-to-b from-black/0 to-black py-3 fixed bottom-0 right-0 z-50 transition-all duration-300" style={{ left: sidebarExpanded ? '16rem' : '4rem' }}>
+      <div className="px-2 max-w-3xl mx-auto">
         <form onSubmit={handleSubmit} className="relative">
           <textarea
             value={input}
