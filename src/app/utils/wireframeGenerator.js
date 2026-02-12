@@ -10,7 +10,7 @@ export async function generateWireframeFromChat(messages) {
     console.log('Starting wireframe generation with messages:', chatContext)
 
     // Call Claude API with wireframe generation prompt
-    const response = await fetch('http://localhost:3001/api/claude', {
+    const response = await fetch('/api/claude', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
